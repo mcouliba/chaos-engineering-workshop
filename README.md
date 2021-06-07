@@ -1,1 +1,1 @@
-# chaos-monkey-workshop
+# chaos-engineering-workshop
