@@ -74,6 +74,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: viaggi
+  labels:
+    app.kubernetes.io/part-of: travel-portal
 spec:
   selector:
     matchLabels:
