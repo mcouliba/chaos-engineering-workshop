@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: voyages
+  name: voyages-fr
   labels:
     app.kubernetes.io/part-of: travel-portal
 spec:
   selector:
     matchLabels:
-      app: voyages
+      app: voyages-fr
       version: v1
   replicas: 1
   template:
@@ -34,11 +34,11 @@ spec:
                 header:
                   name: travel
       labels:
-        app: voyages
+        app: voyages-fr
         version: v1
     spec:
       containers:
-        - name: voyages
+        - name: voyages-fr
           image: quay.io/kiali/demo_travels_portal:v1
           imagePullPolicy: IfNotPresent
           ports:
@@ -60,26 +60,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: voyages
+  name: voyages-fr
   labels:
-    app: voyages
+    app: voyages-fr
 spec:
   ports:
     - name: http
       port: 8000
   selector:
-    app: voyages
+    app: voyages-fr
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: viaggi
+  name: viaggi-it
   labels:
     app.kubernetes.io/part-of: travel-portal
 spec:
   selector:
     matchLabels:
-      app: viaggi
+      app: viaggi-it
       version: v1
   replicas: 1
   template:
@@ -106,7 +106,7 @@ spec:
                 header:
                   name: travel
       labels:
-        app: viaggi
+        app: viaggi-it
         version: v1
     spec:
       containers:
@@ -132,26 +132,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: viaggi
+  name: viaggi-it
   labels:
-    app: viaggi
+    app: viaggi-it
 spec:
   ports:
     - name: http
       port: 8000
   selector:
-    app: viaggi
+    app: viaggi-it
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: travels
+  name: travels-uk
   labels:
     app.kubernetes.io/part-of: travel-portal
 spec:
   selector:
     matchLabels:
-      app: travels
+      app: travels-uk
       version: v1
   replicas: 1
   template:
@@ -178,7 +178,7 @@ spec:
                 header:
                   name: travel
       labels:
-        app: travels
+        app: travels-uk
         version: v1
     spec:
       containers:
@@ -204,12 +204,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: travels
+  name: travels-uk
   labels:
-    app: travels
+    app: travels-uk
 spec:
   ports:
     - name: http
       port: 8000
   selector:
-    app: travels
+    app: travels-uk
