@@ -42,6 +42,7 @@ kind: Deployment
 metadata:
   name: mysqldb-v1
   labels:
+    app.kubernetes.io/part-of: travel-agency
     app: mysqldb
     version: v1
 spec:
@@ -83,6 +84,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: cars-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
@@ -165,6 +168,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: discounts-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
@@ -234,6 +239,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: flights-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
@@ -316,6 +323,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: hotels-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
@@ -398,6 +407,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: insurances-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
@@ -462,6 +473,8 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: travels-v1
+  labels:
+    app.kubernetes.io/part-of: travel-agency
 spec:
   selector:
     matchLabels:
