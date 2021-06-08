@@ -1,12 +1,11 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shop-v1
+  name: control
 spec:
   selector:
     matchLabels:
-      app: shop
+      app: control
       version: v1
   replicas: 1
   template:
@@ -15,34 +14,30 @@ spec:
         readiness.status.sidecar.istio.io/applicationPorts: ""
         sidecar.istio.io/inject: 'true'
       labels:
-        app: shop
+        app: control
         version: v1
     spec:
       containers:
-        - name: shop
-          image: quay.io/kiali/demo_error_rates_server:v1
+        - name: control
+          image: quay.io/kiali/demo_travels_control:v1
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8888
+            - containerPort: 8080
           securityContext:
             privileged: false
           env:
-            - name: CODE_REQUESTS
-              value: "200,8;201,1;202,1"
-            - name: SERVER_NAME
-              value: "shop-v1"
-            - name: SERVER_URL
-              value: "http://music:8888/status,http://bookstore:8888/status,http://games:8888/status"
+            - name: PORTAL_SERVICES
+              value: "voyages.fr;http://voyages:8000,viaggi.it;http://viaggi:8000,travels.uk;http://travels:8000"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop
+  name: control
   labels:
-    app: shop
+    app: control
 spec:
   ports:
     - name: http
-      port: 8888
+      port: 8080
   selector:
-    app: shop
+    app: control
