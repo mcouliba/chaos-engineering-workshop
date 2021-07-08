@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1624437794314,
+  "iteration": 1625747690773,
   "links": [],
   "panels": [
     {
@@ -48,7 +48,7 @@
       ],
       "datasource": null,
       "description": "",
-      "format": "ops",
+      "format": "opm",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -102,7 +102,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "round(sum(irate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\"}[1m])), 0.001)",
+          "expr": "sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\"}[1m]))",
           "interval": "",
           "refId": "A"
         }
@@ -217,7 +217,7 @@
         "#d44a3a"
       ],
       "datasource": null,
-      "format": "ops",
+      "format": "opm",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -271,7 +271,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(irate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", response_code=~\"[45].*\"}[1m]))",
+          "expr": "sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", response_code=~\"[45].*\"}[1m]))",
           "legendFormat": "",
           "refId": "A"
         }
@@ -1198,7 +1198,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1218,5 +1218,5 @@
   "timezone": "",
   "title": "Chaos Engineering Metrics",
   "uid": "oKb0E_6Mz",
-  "version": 4
+  "version": 2
 }
