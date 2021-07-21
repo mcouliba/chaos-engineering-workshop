@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1625747690773,
+  "iteration": 1626710414765,
   "links": [],
   "panels": [
     {
@@ -102,7 +102,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\"}[1m]))",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\"}[1m]))",
           "interval": "",
           "refId": "A"
         }
@@ -187,7 +187,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", response_code!~\"5.*\"}[1m])) / sum(rate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\"}[1m]))",
+          "expr": "sum(rate(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", response_code!~\"5.*\"}[1m])) / sum(rate(istio_requests_total{reporter=\"source\", namespace=\"$namespace\"}[1m]))",
           "instant": false,
           "refId": "A"
         }
@@ -271,7 +271,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", response_code=~\"[45].*\"}[1m]))",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", response_code=~\"[45].*\"}[1m]))",
           "legendFormat": "",
           "refId": "A"
         }
@@ -328,7 +328,7 @@
           "pattern": "Value #A",
           "thresholds": [],
           "type": "number",
-          "unit": "ops"
+          "unit": "opm"
         },
         {
           "alias": "P50 Latency",
@@ -374,13 +374,15 @@
           "decimals": 2,
           "mappingType": 1,
           "pattern": "Value #D",
-          "thresholds": [],
+          "thresholds": [
+            ""
+          ],
           "type": "number",
           "unit": "ms"
         },
         {
           "alias": "Success Rate",
-          "colorMode": "cell",
+          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -391,8 +393,7 @@
           "mappingType": 1,
           "pattern": "Value #E",
           "thresholds": [
-            "0.95",
-            "0.99"
+            ""
           ],
           "type": "number",
           "unit": "percentunit"
@@ -400,35 +401,35 @@
       ],
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", response_code=\"200\"}[1m])) by (destination_service_name)",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", response_code=\"200\"}[1m])) by (destination_service)",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.50, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\"}[1m])) by (le, destination_service_name))",
+          "expr": "histogram_quantile(0.50, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.90, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\"}[1m])) by (le, destination_service_name))",
+          "expr": "histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\"}[1m])) by (le, destination_service_name))",
+          "expr": "histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "D"
         },
         {
-          "expr": "sum(rate(istio_requests_total{reporter=\"destination\" , namespace=\"$namespace\", response_code!~\"[45].*\"}[1m])) by (destination_service_name) / sum(rate(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\"}[1m])) by (destination_service_name)",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\" , namespace=\"$namespace\", response_code!~\"[45].*\"}[1m])) by (destination_service) / sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (destination_service)",
           "format": "table",
           "instant": true,
           "refId": "E"
@@ -520,7 +521,7 @@
       "pluginVersion": "5.0.0",
       "targets": [
         {
-          "expr": "(1-sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\",response_code!~\"[45].*\"}[1m]))/sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])))",
+          "expr": "(1-sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\",response_code!~\"[45].*\"}[1m]))/sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])))",
           "instant": true,
           "refId": "A"
         }
@@ -570,7 +571,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\",response_code!~\"[45].*\"}[1m])) by (destination_service)) / (sum(increase(istio_requests_total{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m]))by (destination_service))",
+          "expr": "(sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\",response_code!~\"[45].*\"}[1m])) by (destination_service)) / (sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m]))by (destination_service))",
           "legendFormat": "{{ destination_service }}",
           "refId": "A"
         }
@@ -698,11 +699,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(rate(istio_request_duration_milliseconds_sum{reporter=\"destination\",namespace=\"$namespace\",destination_service_name=\"$service\"}[1m]))/sum(rate(istio_request_duration_milliseconds_count{reporter=\"destination\",namespace=\"$namespace\",destination_service_name=\"$service\"}[1m]))",
+          "expr": "sum(rate(istio_request_duration_milliseconds_sum{reporter=\"source\",namespace=\"$namespace\",destination_service=\"$service\"}[1m]))/sum(rate(istio_request_duration_milliseconds_count{reporter=\"source\",namespace=\"$namespace\",destination_service=\"$service\"}[1m]))",
           "refId": "A"
         }
       ],
-      "thresholds": "10, 15",
+      "thresholds": "100,500",
       "timeFrom": null,
       "timeShift": null,
       "title": "Average",
@@ -781,11 +782,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "refId": "A"
         }
       ],
-      "thresholds": "10, 15",
+      "thresholds": "100,500",
       "timeFrom": null,
       "timeShift": null,
       "title": "Median (P50)",
@@ -864,11 +865,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "histogram_quantile(0.90, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.90, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "refId": "A"
         }
       ],
-      "thresholds": "10, 15",
+      "thresholds": "100, 500",
       "timeFrom": null,
       "timeShift": null,
       "title": "P90",
@@ -947,11 +948,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "refId": "A"
         }
       ],
-      "thresholds": "10, 15",
+      "thresholds": "100, 500",
       "timeFrom": null,
       "timeShift": null,
       "title": "P99",
@@ -1006,18 +1007,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "instant": false,
           "legendFormat": "P50",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "legendFormat": "P90",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"destination\", namespace=\"$namespace\", destination_service_name=\"$service\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(irate(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=\"$service\"}[1m])) by (le))",
           "legendFormat": "P99",
           "refId": "C"
         }
@@ -1127,11 +1128,12 @@
       {
         "allValue": null,
         "current": {
-          "text": "cars",
-          "value": "cars"
+          "tags": [],
+          "text": "travels.chaos-engineering3.svc.cluster.local",
+          "value": "travels.chaos-engineering3.svc.cluster.local"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(destination_service_name)",
+        "definition": "label_values(destination_service)",
         "hide": 0,
         "includeAll": false,
         "label": "Service",
@@ -1139,34 +1141,29 @@
         "name": "service",
         "options": [
           {
-            "selected": true,
-            "text": "cars",
-            "value": "cars"
+            "selected": false,
+            "text": "cars.chaos-engineering3.svc.cluster.local",
+            "value": "cars.chaos-engineering3.svc.cluster.local"
           },
           {
             "selected": false,
-            "text": "control",
-            "value": "control"
+            "text": "discounts.chaos-engineering3.svc.cluster.local",
+            "value": "discounts.chaos-engineering3.svc.cluster.local"
           },
           {
             "selected": false,
-            "text": "discounts",
-            "value": "discounts"
+            "text": "flights.chaos-engineering3.svc.cluster.local",
+            "value": "flights.chaos-engineering3.svc.cluster.local"
           },
           {
             "selected": false,
-            "text": "flights",
-            "value": "flights"
+            "text": "hotels.chaos-engineering3.svc.cluster.local",
+            "value": "hotels.chaos-engineering3.svc.cluster.local"
           },
           {
             "selected": false,
-            "text": "hotels",
-            "value": "hotels"
-          },
-          {
-            "selected": false,
-            "text": "insurances",
-            "value": "insurances"
+            "text": "insurances.chaos-engineering3.svc.cluster.local",
+            "value": "insurances.chaos-engineering3.svc.cluster.local"
           },
           {
             "selected": false,
@@ -1174,17 +1171,12 @@
             "value": "mysqldb.chaos-engineering3.svc.cluster.local"
           },
           {
-            "selected": false,
-            "text": "travels",
-            "value": "travels"
-          },
-          {
-            "selected": false,
+            "selected": true,
             "text": "travels.chaos-engineering3.svc.cluster.local",
             "value": "travels.chaos-engineering3.svc.cluster.local"
           }
         ],
-        "query": "label_values(destination_service_name)",
+        "query": "label_values(destination_service)",
         "refresh": 0,
         "regex": "",
         "skipUrlSync": false,
@@ -1198,7 +1190,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-1m",
     "to": "now"
   },
   "timepicker": {
@@ -1217,6 +1209,5 @@
   },
   "timezone": "",
   "title": "Chaos Engineering Metrics",
-  "uid": "oKb0E_6Mz",
-  "version": 2
+  "version": 1
 }
