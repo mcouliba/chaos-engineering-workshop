@@ -1091,10 +1091,6 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "chaos-engineering3",
-          "value": "chaos-engineering3"
-        },
         "datasource": "Prometheus",
         "definition": "label_values(destination_service_namespace)",
         "hide": 0,
@@ -1102,20 +1098,8 @@
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
-        "options": [
-          {
-            "selected": true,
-            "text": "chaos-engineering3",
-            "value": "chaos-engineering3"
-          },
-          {
-            "selected": false,
-            "text": "unknown",
-            "value": "unknown"
-          }
-        ],
         "query": "label_values(destination_service_namespace)",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1127,11 +1111,6 @@
       },
       {
         "allValue": null,
-        "current": {
-          "tags": [],
-          "text": "travels.chaos-engineering3.svc.cluster.local",
-          "value": "travels.chaos-engineering3.svc.cluster.local"
-        },
         "datasource": "Prometheus",
         "definition": "label_values(destination_service)",
         "hide": 0,
@@ -1139,45 +1118,8 @@
         "label": "Service",
         "multi": false,
         "name": "service",
-        "options": [
-          {
-            "selected": false,
-            "text": "cars.chaos-engineering3.svc.cluster.local",
-            "value": "cars.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": false,
-            "text": "discounts.chaos-engineering3.svc.cluster.local",
-            "value": "discounts.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": false,
-            "text": "flights.chaos-engineering3.svc.cluster.local",
-            "value": "flights.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": false,
-            "text": "hotels.chaos-engineering3.svc.cluster.local",
-            "value": "hotels.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": false,
-            "text": "insurances.chaos-engineering3.svc.cluster.local",
-            "value": "insurances.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": false,
-            "text": "mysqldb.chaos-engineering3.svc.cluster.local",
-            "value": "mysqldb.chaos-engineering3.svc.cluster.local"
-          },
-          {
-            "selected": true,
-            "text": "travels.chaos-engineering3.svc.cluster.local",
-            "value": "travels.chaos-engineering3.svc.cluster.local"
-          }
-        ],
         "query": "label_values(destination_service)",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
