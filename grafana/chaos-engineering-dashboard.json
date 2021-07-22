@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1626710414765,
+  "id": 13,
+  "iteration": 1626965183763,
   "links": [],
   "panels": [
     {
@@ -1098,6 +1098,7 @@
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
+        "options": [],
         "query": "label_values(destination_service_namespace)",
         "refresh": 1,
         "regex": "",
@@ -1118,9 +1119,10 @@
         "label": "Service",
         "multi": false,
         "name": "service",
+        "options": [],
         "query": "label_values(destination_service)",
         "refresh": 1,
-        "regex": "",
+        "regex": "/.*$namespace.*/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -1151,5 +1153,6 @@
   },
   "timezone": "",
   "title": "Chaos Engineering Metrics",
-  "version": 1
+  "uid": "9VZlzOZ7k",
+  "version": 4
 }
