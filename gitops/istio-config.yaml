@@ -1,0 +1,124 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: cars
+spec:
+  hosts:
+  - cars
+  http:
+  - route:
+    - destination:
+        host: cars
+        subset: v1
+      weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: discounts
+spec:
+  hosts:
+  - discounts
+  http:
+  - route:
+    - destination:
+        host: discounts
+        subset: v1
+      weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: flights
+spec:
+  hosts:
+  - flights
+  http:
+  - route:
+    - destination:
+        host: flights
+        subset: v1
+      weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hotels
+spec:
+  hosts:
+  - hotels
+  http:
+  - route:
+    - destination:
+        host: hotels
+        subset: v1
+      weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: insurances
+spec:
+  hosts:
+  - insurances
+  http:
+  - route:
+    - destination:
+        host: insurances
+        subset: v1
+      weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: cars
+spec:
+  host: cars
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: discounts
+spec:
+  host: discounts
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: flights
+spec:
+  host: flights
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: hotels
+spec:
+  host: hotels
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: insurances
+spec:
+  host: insurances
+  subsets:
+  - labels:
+      version: v1
+    name: v1
