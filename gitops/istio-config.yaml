@@ -2,6 +2,8 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: cars
+  labels:
+    kiali_wizard: request_timeouts
 spec:
   hosts:
   - cars
@@ -16,6 +18,8 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: discounts
+  labels:
+    kiali_wizard: fault_injection
 spec:
   hosts:
   - discounts
@@ -30,6 +34,8 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: flights
+  labels:
+    kiali_wizard: request_timeouts
 spec:
   hosts:
   - flights
@@ -44,6 +50,8 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: hotels
+  labels:
+    kiali_wizard: request_timeouts
 spec:
   hosts:
   - hotels
@@ -58,6 +66,8 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: insurances
+  labels:
+    kiali_wizard: request_timeouts
 spec:
   hosts:
   - insurances

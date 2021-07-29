@@ -306,7 +306,7 @@
       "pageSize": null,
       "showHeader": true,
       "sort": {
-        "col": 3,
+        "col": 1,
         "desc": true
       },
       "styles": [
@@ -401,35 +401,35 @@
       ],
       "targets": [
         {
-          "expr": "sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", response_code=\"200\"}[1m])) by (destination_service)",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\", response_code=\"200\"}[1m])) by (destination_service)",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.50, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
+          "expr": "histogram_quantile(0.50, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
+          "expr": "histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (le, destination_service))",
+          "expr": "histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter=\"source\", namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\"}[1m])) by (le, destination_service))",
           "format": "table",
           "instant": true,
           "legendFormat": "{{destination_service_name}}",
           "refId": "D"
         },
         {
-          "expr": "sum(increase(istio_requests_total{reporter=\"source\" , namespace=\"$namespace\", response_code!~\"[45].*\"}[1m])) by (destination_service) / sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\"}[1m])) by (destination_service)",
+          "expr": "sum(increase(istio_requests_total{reporter=\"source\" , namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\", response_code!~\"[45].*\"}[1m])) by (destination_service) / sum(increase(istio_requests_total{reporter=\"source\", namespace=\"$namespace\", destination_service=~\"\\\\w+\\\\..*\"}[1m])) by (destination_service)",
           "format": "table",
           "instant": true,
           "refId": "E"
